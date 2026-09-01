@@ -27,3 +27,15 @@ Proje 3 temel katman ve motor yapısından oluşur:
 ```bash
 uv sync --link-mode=copy
 uv add typer
+
+---
+
+## 🏎️ Ödev 2.3: Performans Yarışması Sonuçları
+~500.000 satırlık (~25 MB) log dosyası üzerinde 4 farklı agregasyon yönteminin süre ve bellek karşılaştırması:
+
+| Yöntem | Süre (sn) | Peak Bellek (MB) | Teknik Açıklama |
+|---|---|---|---|
+| **a) Naive Line Loop** | 1.9998 | 105.90 | Tüm dosya `.readlines()` ile belleğe liste olarak yüklendiği için yüksek bellek harcar. |
+| **b) Generator + Counter** | 1.6035 | **0.05** | `yield` tabanlı akış (`streaming`) kullanıldığı için RAM tüketimi sıfıra yakındır. |
+| **c) Multiprocessing Chunk** | 3.4399 | 153.20 | Süreçler arası veri aktarımı (`IPC`) ek yükü ve chunk maliyeti nedeniyle bu veri boyutunda dezavantajlıdır. |
+| **d) Polars** | **0.1314** | **0.02** | Rust tabanlı vektörel motoru sayesinde en hızlı ve en verimli sonuçları verir. |
