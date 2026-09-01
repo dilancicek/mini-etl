@@ -27,6 +27,7 @@ Proje 3 temel katman ve motor yapısından oluşur:
 ```bash
 uv sync --link-mode=copy
 uv add typer
+```
 
 ---
 
