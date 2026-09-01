@@ -1,6 +1,6 @@
 # mini-etl 🚀
 
-> Harici kütüphane bağımlılığı olmadan (yalnızca Python stdlib), bellek dostu streaming mimarisiyle çalışan, hata yönetimli (*dead-letter*) hafif ve modüler bir ETL künlüphanesi.
+> Harici kütüphane bağımlılığı olmadan (yalnızca Python stdlib), bellek dostu streaming mimarisiyle çalışan, hata yönetimli (*dead-letter*) hafif ve modüler bir ETL kütüphanesi.
 
 ## 📊 Sonuçlar & Metrikler
 | Metrik | Durum / Değer |
