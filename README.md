@@ -40,3 +40,19 @@ uv add typer
 | **b) Generator + Counter** | 1.6035 | **0.05** | `yield` tabanlı akış (`streaming`) kullanıldığı için RAM tüketimi sıfıra yakındır. |
 | **c) Multiprocessing Chunk** | 3.4399 | 153.20 | Süreçler arası veri aktarımı (`IPC`) ek yükü ve chunk maliyeti nedeniyle bu veri boyutunda dezavantajlıdır. |
 | **d) Polars** | **0.1314** | **0.02** | Rust tabanlı vektörel motoru sayesinde en hızlı ve en verimli sonuçları verir. |
+
+
+---
+
+## 🌐 Ödev 2.4: Async API İstemcisi Performans Testi
+Açık bir API'den (JSONPlaceholder) toplam 1000 adet kaydın çekilme süresi ve yöntem karşılaştırması:
+
+| Yöntem | Süre (sn) | Başarı | Teknik Açıklama |
+|---|---|---|---|
+| **(a) Senkron (requests)** | 360.84 | 1000/1000 | İstekler sırayla atıldığı için her yanıt beklendi (Bloklama). |
+| **(b) Asenkron (httpx)** | 215.87 | 1000/1000 | `asyncio` ile eşzamanlı istek atıldı. **1.7 kat** daha hızlı tamamlandı. |
+
+### Rate Limit (429) ve Hata Yönetimi
+Birim zamanda çok fazla istek atıldığında sunucunun engellemesine (Rate Limit) takılmamak ve olası ağ kopmalarını yönetmek için iki kalkan kullanıldı:
+1. **Önleyici (Semaphore):** Asenkron hızın sunucuyu boğmasını engellemek için `asyncio.Semaphore(10)` ile aynı anda maksimum 10 isteğe izin verildi (Client-side throttling).
+2. **Kurtarıcı (Retry & Exponential Backoff):** Test sırasında 178. istekte yaşanan ağ hatasında programın çökmesi engellendi; hata yakalanarak artan sürelerle (1s, 2s, 4s...) yeniden denenmesi (retry) sağlandı.
