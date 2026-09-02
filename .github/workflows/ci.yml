@@ -1,0 +1,30 @@
+name: Mini-ETL Sürekli Entegrasyon (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Testleri Calistir
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Kodu Klonla
+        uses: actions/checkout@v4
+
+      - name: ⚡ uv (Paket Yöneticisi) Kurulumu
+        uses: astral-sh/setup-uv@v2
+        with:
+          version: "latest"
+
+      - name: 🐍 Python 3.12 Kurulumu
+        run: uv python install 3.12
+
+      - name: 📦 Bagimliliklari Yukle
+        run: uv sync
+
+      - name: 🧪 Testleri ve Kapsami (Coverage) Calistir
+        run: uv run pytest --cov
