@@ -56,3 +56,19 @@ Açık bir API'den (JSONPlaceholder) toplam 1000 adet kaydın çekilme süresi v
 Birim zamanda çok fazla istek atıldığında sunucunun engellemesine (Rate Limit) takılmamak ve olası ağ kopmalarını yönetmek için iki kalkan kullanıldı:
 1. **Önleyici (Semaphore):** Asenkron hızın sunucuyu boğmasını engellemek için `asyncio.Semaphore(10)` ile aynı anda maksimum 10 isteğe izin verildi (Client-side throttling).
 2. **Kurtarıcı (Retry & Exponential Backoff):** Test sırasında 178. istekte yaşanan ağ hatasında programın çökmesi engellendi; hata yakalanarak artan sürelerle (1s, 2s, 4s...) yeniden denenmesi (retry) sağlandı.
+
+
+---
+
+## 📚 Bölüm 2: Araştırma ve Dokümantasyon (Ödev 2.5 ve 2.6)
+
+Projenin bu aşamasında istenen teorik araştırmalar (Ödev 2.5) ve teknik soruların cevapları (Ödev 2.6) aşağıdaki dokümanlarda derlenmiştir:
+
+* **[Python GIL (Global Interpreter Lock) İncelemesi](docs/gil_arastirmasi.md)**
+  > Python'un GIL mekanizmasının veri işleme süreçlerine etkisi ve çoklu iş parçacığı/işlem (multithreading vs multiprocessing) kavramları üzerine araştırma notları.
+
+* **[Veri İşleme Kodlarında Test Stratejileri](docs/veri_test_stratejileri.md)**
+  > Veri boru hatlarında oluşabilecek hatalara karşı Şema, İnvaryant, Altın Dosya ve Özellik Tabanlı (Property-Based) test kavramlarının incelenmesi. (Not: Özellik tabanlı testin pratik uygulaması `scripts/data_test_demo.py` dosyasında yapılmıştır).
+
+* **[Bölüm 2 Kontrol Soruları](docs/kontrol_sorulari_bolum2.md)**
+  > Veri yapıları (`list` vs `deque`), büyük veri işleme (Out-of-Core, Chunking vb.) ve test mimarisi üzerine sorulan teknik soruların yanıtları.
