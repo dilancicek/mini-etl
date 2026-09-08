@@ -69,11 +69,18 @@ Bu teoriyi doğrulamak ve kodun sınırlarını zorlamak için projemin `scripts
 
 Sistemde yaş verilerini temizleyen basit bir `yasi_temizle()` fonksiyonu yazdım. Kuralım basitti: Fonksiyon yaş değerini 0 ile 120 arasında bir tamsayı olarak dönmeli, hatalı her türlü durumda ise çökmek yerine `None` dönmeliydi. 
 
-Geleneksel test yazmak yerine `hypothesis`'e şu talimatı verdim:
-`@given(st.text())` -> "Bana rastgele string (metin) verileri üret ve fonksiyonuma yolla."
+Geleneksel test yazmak yerine `hypothesis` kütüphanesini kullanarak test fonksiyonumu ve İnvaryant (Kural) şartımı şu şekilde kurguladım:
 
-Belirlediğim İnvaryant (Kural) ise şuydu:
-`assert sonuc is None or (0 <= sonuc <= 120)` -> "Sonuç ya None olmalı ya da 0-120 arasında bir sayı. **Kod KESİNLİKLE ÇÖKMEMELİ.**"
+```python
+# Bana rastgele string (metin) verileri üret ve fonksiyonuma yolla
+@given(st.text())
+def test_yasi_temizle_invaryant(rastgele_metin):
+    sonuc = yasi_temizle(rastgele_metin)
+    
+    # Sonuç ya None olmalı ya da 0-120 arasında bir sayı. Kod KESİNLİKLE ÇÖKMEMELİ.
+    assert sonuc is None or (0 <= sonuc <= 120)
+
+ ```
 
 **Testin Sonucu:**
 Terminalde `pytest` üzerinden çalıştırdığımda, `hypothesis` arka planda fonksiyona yüzlerce akıl almaz metin formatı gönderdi. Boş stringler, semboller, devasa karakter blokları... Ve test **%100 PASSED (Başarılı)** sonucunu verdi. Kodum hiçbir saçma girdi karşısında çökmedi veya Exception fırlatmadı. Eğer fonksiyonumda en ufak bir tip dönüşümü (type casting) açığı olsaydı, `hypothesis` kütüphanesi saniyesinde o spesifik girdiyi bulup "İşte bu metin kodunu çökertti!" diyerek hatayı yüzüme vuracaktı. Özellik tabanlı testler, özellikle veri ayrıştırma (parsing) ve temizleme operasyonlarında kodun dayanıklılığını (robustness) kanıtlamanın en kesin yoludur.
