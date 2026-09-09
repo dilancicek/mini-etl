@@ -6,7 +6,7 @@
 | Metrik | Durum / Değer |
 |---|---|
 | **Test Başarısı** | 8/8 Test Geçti (%100) |
-| **Test Kapsamı (Coverage)** | **%91** (`pytest-cov`, Hedef: %85+) |
+| **Test Kapsamı (Coverage)** | **%94** (`pytest-cov`, Hedef: %85+) |
 | **Tip Güvenliği** | Mypy Strict (Sıfır Hata) |
 | **Bellek Tüketimi (Streaming)** | **~185 MB RAM** (~5 GB veri seti testi için) |
 

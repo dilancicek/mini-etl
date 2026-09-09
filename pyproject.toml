@@ -27,3 +27,6 @@ dev = [
     "ruff>=0.16.5",
     "typer>=0.27.2",
 ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-fail-under=85"

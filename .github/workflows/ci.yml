@@ -26,5 +26,11 @@ jobs:
       - name: 📦 Bagimliliklari Yukle
         run: uv sync
 
+      - name: 🧹 Kod Kalitesi (Ruff)
+        run: uv run ruff check .
+
+      - name: 🏷️ Tip Guvenligi (Mypy)
+        run: uv run mypy --strict src
+
       - name: 🧪 Testleri ve Kapsami (Coverage) Calistir
         run: uv run pytest --cov
