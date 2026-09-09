@@ -37,12 +37,9 @@ class ETLEngine:
 
         # 2. Transform & Validation (Dönüştür ve satır bazlı hata yönetimi yap)
         # Pipeline tek bir transform veya zincir olabilir
-        if hasattr(self.pipeline, "transform"):
-            transformed_stream = self.pipeline.transform(raw_data)
-        else:
-            transformed_stream = raw_data
+        
 
-        for row in transformed_stream: # Not: Satır bazlı denetim için ham veriden işleme alıyoruz
+        for row in raw_data: # Not: Satır bazlı denetim için ham veriden işleme alıyoruz
             read_count += 1
             try:
                 # Tekil satıra dönüşüm/doğrulama uygulayalım
