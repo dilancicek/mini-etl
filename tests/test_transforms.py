@@ -1,6 +1,8 @@
 import pytest
-from mini_etl.transforms import BaseTransform, MapTransform, PipelineChain
+
 from mini_etl.sinks import CSVSink
+from mini_etl.transforms import BaseTransform, MapTransform, PipelineChain
+
 
 def test_map_transform():
     # Gelen sözlükteki yaşları integer'a çeviren bir dönüşüm fonksiyonu yazalım

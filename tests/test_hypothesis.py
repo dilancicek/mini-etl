@@ -1,5 +1,8 @@
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
+
 from mini_etl.transforms import MapTransform
+
 
 @given(st.integers(), st.text(min_size=1))
 def test_map_transform_with_hypothesis(number_val, text_val):

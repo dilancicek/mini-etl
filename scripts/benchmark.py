@@ -1,9 +1,10 @@
+import os
 import sys
 import time
-import os
 from collections import Counter
-from pathlib import Path
 from multiprocessing import Pool, cpu_count
+from pathlib import Path
+
 import polars as pl
 
 if sys.platform == "win32":
@@ -67,8 +68,7 @@ def method_naive_loop():
 # (b) Generator + Counter (Bellek dostu akış)
 def line_generator(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
-        for line in f:
-            yield line
+        yield from f
 
 def method_generator_counter():
     counter = Counter()

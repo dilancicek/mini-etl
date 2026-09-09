@@ -1,7 +1,7 @@
 import csv
 import logging
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 # Yapılandırılmış loglama ayarlayalım
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -33,7 +33,7 @@ class ETLEngine:
             raw_data = self.source.read()
         except Exception as e:
             logger.error(f"Veri kaynağı okunamadı: {e}")
-            raise e
+            raise 
 
         # 2. Transform & Validation (Dönüştür ve satır bazlı hata yönetimi yap)
         # Pipeline tek bir transform veya zincir olabilir
@@ -42,7 +42,7 @@ class ETLEngine:
         else:
             transformed_stream = raw_data
 
-        for row in raw_data: # Not: Satır bazlı denetim için ham veriden işleme alıyoruz
+        for row in transformed_stream: # Not: Satır bazlı denetim için ham veriden işleme alıyoruz
             read_count += 1
             try:
                 # Tekil satıra dönüşüm/doğrulama uygulayalım
@@ -52,7 +52,7 @@ class ETLEngine:
                 else:
                     processed_row = row
                 success_rows.append(processed_row)
-            except Exception as err:
+            except Exception as err:  # noqa: BLE001
                 logger.warning(f"Satır işlenemedi (Dead-letter'a atılıyor): {row} | Hata: {err}")
                 error_row = dict(row)
                 error_row["error_reason"] = str(err)

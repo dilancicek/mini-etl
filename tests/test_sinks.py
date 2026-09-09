@@ -1,6 +1,8 @@
 import csv
 import sqlite3
+
 from mini_etl.sinks import CSVSink, SQLiteSink
+
 
 def test_csv_sink_write(tmp_path):
     # CSV Sink testi

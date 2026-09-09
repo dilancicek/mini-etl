@@ -1,11 +1,13 @@
 import csv
+from collections.abc import Generator
 from pathlib import Path
-from typing import Any, Dict, Generator, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
+
 
 @runtime_checkable
 class DataSource(Protocol):
     """Tüm veri kaynaklarının uyması gereken ortak protokol (sözleşme)."""
-    def read(self) -> Generator[Dict[str, Any], None, None]:
+    def read(self) -> Generator[dict[str, Any], None, None]:
         ...
 
 class CSVSource:
@@ -13,7 +15,7 @@ class CSVSource:
     def __init__(self, file_path: Path | str):
         self.file_path = Path(file_path)
 
-    def read(self) -> Generator[Dict[str, Any], None, None]:
+    def read(self) -> Generator[dict[str, Any], None, None]:
         if not self.file_path.exists():
             raise FileNotFoundError(f"Dosya bulunamadı: {self.file_path}")
         

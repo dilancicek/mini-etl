@@ -1,17 +1,19 @@
-import typer
 from pathlib import Path
-from mini_etl.sources import CSVSource
-from mini_etl.sinks import CSVSink
+
+import typer
+
 from mini_etl.engine import ETLEngine
+from mini_etl.sinks import CSVSink
+from mini_etl.sources import CSVSource
 
 app = typer.Typer(help="Mini-ETL Komut Satırı Aracı")
 
 @app.callback(invoke_without_command=True)
 def main(
     ctx: typer.Context,
-    input_file: Path = typer.Option(..., "--input", "-i", help="Girdi CSV dosyası"),
-    output_file: Path = typer.Option(..., "--output", "-o", help="Çıktı CSV dosyası"),
-    dead_letter: Path = typer.Option(Path("dead_letter.csv"), "--dead-letter", "-d", help="Hatalı satırlar dosyası")
+    input_file: Path = typer.Option(..., "--input", "-i", help="Girdi CSV dosyası"),  # noqa: B008
+    output_file: Path = typer.Option(..., "--output", "-o", help="Çıktı CSV dosyası"),  # noqa: B008
+    dead_letter: Path = typer.Option(Path("dead_letter.csv"), "--dead-letter", "-d", help="Hatalı satırlar dosyası")  # noqa: B008
 ) -> None:
     """Mini-ETL boru hattını çalıştırır."""
     if ctx.invoked_subcommand is not None:

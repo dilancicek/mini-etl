@@ -1,4 +1,6 @@
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
+
 
 # 1. Test Edeceğimiz Ufak Veri Temizleme Fonksiyonu
 def yasi_temizle(yas_girdisi):
@@ -19,8 +21,9 @@ def test_yasi_temizle_asla_cokmez(rastgele_metin):
     assert sonuc is None or (0 <= sonuc <= 120)
 
 if __name__ == "__main__":
-    import pytest
     import sys
+
+    import pytest
     print("--- ÖZELLİK TABANLI TEST (PROPERTY-BASED TESTING) BAŞLIYOR ---")
     
     # Bu dosyadaki testleri doğrudan çalıştırıyoruz

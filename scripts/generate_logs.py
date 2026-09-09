@@ -1,6 +1,7 @@
 import random
 from pathlib import Path
 
+
 def generate_log_file(file_path: Path, num_lines: int = 500_000) -> None:
     """Performans testi için büyük bir sentetik log dosyası üretir."""
     file_path.parent.mkdir(parents=True, exist_ok=True)

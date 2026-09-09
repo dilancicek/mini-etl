@@ -1,4 +1,5 @@
 from typer.testing import CliRunner
+
 from mini_etl.cli import app
 
 runner = CliRunner()

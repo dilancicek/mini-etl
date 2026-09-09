@@ -1,4 +1,6 @@
-from typing import Any, Callable, Generator, Iterable, Protocol
+from collections.abc import Callable, Generator, Iterable
+from typing import Any, Protocol
+
 
 class TransformProtocol(Protocol):
     def transform(self, data: Iterable[dict[str, Any]]) -> Generator[dict[str, Any], None, None]:

@@ -1,9 +1,8 @@
-import pytest
-from pathlib import Path
+from mini_etl.engine import ETLEngine
+from mini_etl.sinks import CSVSink
 from mini_etl.sources import CSVSource
 from mini_etl.transforms import MapTransform
-from mini_etl.sinks import CSVSink
-from mini_etl.engine import ETLEngine
+
 
 def test_etl_engine_execution(tmp_path):
     # 1. Kaynak dosya hazırlayalım (biri doğru, biri yaş alanında hata potansiyeli olan satırlar)

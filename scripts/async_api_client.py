@@ -1,7 +1,8 @@
-import time
 import asyncio
-import requests
+import time
+
 import httpx
+import requests
 
 API_BASE_URL = "https://jsonplaceholder.typicode.com/photos/"
 NUM_RECORDS = 1000

@@ -1,5 +1,6 @@
-import time
 import threading
+import time
+
 
 # 1. CPU-Bound İşlem (İşlemciyi yoran matematiksel hesap - GIL burada başa bela olur)
 def cpu_bound_task(n):

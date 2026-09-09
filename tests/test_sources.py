@@ -1,5 +1,5 @@
-import pytest
 from mini_etl.sources import CSVSource
+
 
 def test_csv_source_reads_data(tmp_path):
     # Geçici bir CSV dosyası yaratalım
