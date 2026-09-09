@@ -1,27 +1,50 @@
+import sys
 import time
-import tracemalloc
+import os
 from collections import Counter
 from pathlib import Path
 from multiprocessing import Pool, cpu_count
 import polars as pl
 
+if sys.platform == "win32":
+    import psutil
+else:
+    import resource
+
 LOG_FILE = Path("data/large_logs.txt")
 
-# Ölçüm yardımcı fonksiyonu
+# Ölçüm yardımcı fonksiyonu (OS Seviyesi)
 def measure_performance(func, name):
-    tracemalloc.start()
+    # İşlemden önceki mevcut RAM durumunu kaydediyoruz
+    if sys.platform == "win32":
+        process = psutil.Process(os.getpid())
+        mem_before = process.memory_info().rss
+    else:
+        mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
+
     start_time = time.perf_counter()
     
+    # Test edilecek fonksiyonu (ve Polars'ın Rust motorunu) çalıştır
     result = func()
     
     end_time = time.perf_counter()
-    current, peak = tracemalloc.get_traced_memory()
-    tracemalloc.stop()
     
+    # İşlemden sonraki RAM durumunu alıp farkını hesaplıyoruz
+    if sys.platform == "win32":
+        mem_after = process.memory_info().rss
+    else:
+        mem_after = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
+
     elapsed = end_time - start_time
-    peak_mb = peak / (1024 * 1024)
     
-    print(f"[{name}] Süre: {elapsed:.4f} saniye | Peak Bellek: {peak_mb:.2f} MB")
+    # OS seviyesindeki RAM değişimini MB cinsinden buluyoruz
+    mem_diff_mb = abs(mem_after - mem_before) / (1024 * 1024)
+    
+    # Polars gibi aşırı verimli araçlar bazen işi bitirip RAM'i anında temizler.
+    # Gösterimde sıfır çıkmaması için minimum bir eşik (0.01) belirliyoruz.
+    peak_mb = max(mem_diff_mb, 0.01)
+
+    print(f"[{name}] Süre: {elapsed:.4f} sn | OS Bellek Etkisi: {peak_mb:.2f} MB")
     return elapsed, peak_mb, result
 
 # (a) Naif Satır Döngüsü (Tüm dosyayı RAM'e liste olarak al)

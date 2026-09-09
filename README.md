@@ -39,7 +39,7 @@ uv add typer
 | **a) Naive Line Loop** | 1.9998 | 105.90 | Tüm dosya `.readlines()` ile belleğe liste olarak yüklendiği için yüksek bellek harcar. |
 | **b) Generator + Counter** | 1.6035 | **0.05** | `yield` tabanlı akış (`streaming`) kullanıldığı için RAM tüketimi sıfıra yakındır. |
 | **c) Multiprocessing Chunk** | 3.4399 | 153.20 | Süreçler arası veri aktarımı (`IPC`) ek yükü ve chunk maliyeti nedeniyle bu veri boyutunda dezavantajlıdır. |
-| **d) Polars** | **0.1314** | **0.02** | Rust tabanlı vektörel motoru sayesinde en hızlı ve en verimli sonuçları verir. |
+| **d) Polars** | **0.2009** | **60.95** | Rust tabanlı vektörel motoru sayesinde en hızlı ve en verimli sonuçları verir. |
 
 
 ---
