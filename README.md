@@ -14,10 +14,10 @@
 
 ## 🏗️ Mimari ve Tasarım
 Proje 3 temel katman ve motor yapısından oluşur:
-1. **Source (Kaynak):** `Protocol` tabanlı arayüz ile CSV/SQLite kaynaklarından `generator` (`yield`) kullanarak bellek dostu veri okuma[cite: 1].
-2. **Transform (Dönüşüm):** `>>` (`__rshift__`) operatör aşırı yüklemesi ile akışkan boru hattı (pipeline) kompozisyonu[cite: 1].
-3. **Sink (Hedef):** İşlenen verilerin CSV veya SQLite veritabanına güvenle yazılması[cite: 1].
-4. **Engine & Hata Yönetimi:** Akışı yöneten ve hatalı satırları ana akışı patlatmadan `dead_letter` dosyasına ayıran güvenli motor katmanı[cite: 1].
+1. **Source (Kaynak):** `Protocol` tabanlı arayüz ile CSV/SQLite kaynaklarından `generator` (`yield`) kullanarak bellek dostu veri okuma
+2. **Transform (Dönüşüm):** `>>` (`__rshift__`) operatör aşırı yüklemesi ile akışkan boru hattı (pipeline) kompozisyonu
+3. **Sink (Hedef):** İşlenen verilerin CSV veya SQLite veritabanına güvenle yazılması
+4. **Engine & Hata Yönetimi:** Akışı yöneten ve hatalı satırları ana akışı patlatmadan `dead_letter` dosyasına ayıran güvenli motor katmanı
 
 ---
 

@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Data and Coverage
+data/*.txt
+data/output.csv
+.coverage
