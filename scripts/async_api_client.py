@@ -34,26 +34,28 @@ def fetch_sync():
 async def fetch_single_async(client, semaphore, i):
     url = f"{API_BASE_URL}{i}"
     
-    # Semaphore ile aynı anda maksimum 10 isteğe izin veriyoruz
-    async with semaphore:
-        for attempt in range(MAX_RETRIES):
-            try:
+    # Döngüyü dışarı aldık, böylece her denemede kilit sıfırdan alınacak
+    for attempt in range(MAX_RETRIES):
+        try:
+            # Kilidi SADECE istek atarken tutuyoruz
+            async with semaphore:
                 response = await client.get(url, timeout=10.0)
-                
-                # Rate limit (429) veya sunucu hatası (50x) durumunda Retry mantığı
-                if response.status_code in [429, 500, 502, 503, 504]:
-                    print(f"[{url}] Rate limit/Hata ({response.status_code}). Deneme ({attempt + 1}/{MAX_RETRIES})...")
-                    await asyncio.sleep(2 ** attempt)  # Exponential backoff (1s, 2s, 4s bekleme)
-                    continue
-                
-                response.raise_for_status()
-                return True
-                
-            except httpx.RequestError as e:
-                print(f"[{url}] İstek hatası: {e}. Yeniden deneniyor...")
-                await asyncio.sleep(2 ** attempt)
-                
-        return False 
+            
+            # Kilit Bırakıldı! Artık rate limit kontrolü veya uyku moduna rahatça girebiliriz
+            if response.status_code in [429, 500, 502, 503, 504]:
+                print(f"[{url}] Rate limit/Hata ({response.status_code}). Deneme ({attempt + 1}/{MAX_RETRIES})...")
+                await asyncio.sleep(2 ** attempt)  # Exponential backoff (1s, 2s, 4s bekleme)
+                continue
+            
+            response.raise_for_status()
+            return True
+            
+        except httpx.RequestError as e:
+            print(f"[{url}] İstek hatası: {e}. Yeniden deneniyor...")
+            # Hata durumunda da uyku kilit dışındayken gerçekleşir
+            await asyncio.sleep(2 ** attempt)
+            
+    return False
 
 async def fetch_async_main():
     print(f"\n[Asenkron] {NUM_RECORDS} istek 'httpx' (Semaphore: {SEMAPHORE_LIMIT}) ile atılıyor...")

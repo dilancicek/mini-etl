@@ -49,8 +49,8 @@ Açık bir API'den (JSONPlaceholder) toplam 1000 adet kaydın çekilme süresi v
 
 | Yöntem | Süre (sn) | Başarı | Teknik Açıklama |
 |---|---|---|---|
-| **(a) Senkron (requests)** | 360.84 | 1000/1000 | İstekler sırayla atıldığı için her yanıt beklendi (Bloklama). |
-| **(b) Asenkron (httpx)** | 215.87 | 1000/1000 | `asyncio` ile eşzamanlı istek atıldı. **1.7 kat** daha hızlı tamamlandı. |
+| **(a) Senkron (requests)** | 324.79 | 1000/1000 | İstekler sırayla atıldığı için her yanıt beklendi (Bloklama). |
+| **(b) Asenkron (httpx)** | 20.54 | 1000/1000 | `asyncio` ile eşzamanlı istek atıldı. **15.8 kat** daha hızlı tamamlandı. |
 
 ### Rate Limit (429) ve Hata Yönetimi
 Birim zamanda çok fazla istek atıldığında sunucunun engellemesine (Rate Limit) takılmamak ve olası ağ kopmalarını yönetmek için iki kalkan kullanıldı:
